@@ -1,0 +1,29 @@
+.navbar{
+	background-color: #25024a;
+}
+.navbar-brand{
+	color: #D2AC47;
+}
+.active a{
+	color: #D2AC47;
+}
+.dropdown a{
+	color: #D2AC47;
+}
+.profile a{
+	color: #D2AC47;
+}
+.addItem a{
+	color: #D2AC47;
+}
+.glyphicon{
+	color: #D2AC47;
+}
+.nav li{
+	color: #D2AC47;
+}
+.nav-btn{
+	color: #D2AC47;
+	background-color: transparent;
+	border: none;
+}
