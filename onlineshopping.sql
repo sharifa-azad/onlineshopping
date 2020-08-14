@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 02, 2020 at 08:25 AM
+-- Generation Time: Aug 14, 2020 at 09:48 AM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -21,6 +21,30 @@ SET time_zone = "+00:00";
 --
 -- Database: `onlineshopping`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer`
+--
+
+CREATE TABLE `customer` (
+  `customerName` varchar(25) DEFAULT NULL,
+  `customerId` int(11) NOT NULL,
+  `place` varchar(25) DEFAULT NULL,
+  `email` varchar(25) DEFAULT NULL,
+  `phoneNumber` varchar(13) DEFAULT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`customerName`, `customerId`, `place`, `email`, `phoneNumber`, `username`, `password`) VALUES
+('fatma', 12345685, 'Vikokotoni', 'fatma@gmail.com', '0789028454', 'fatma11', '123456'),
+('mohd', 12345686, 'Malindi ', 'mohd@gmail.com', '0785766666', 'mohd22', '123456');
 
 -- --------------------------------------------------------
 
@@ -43,21 +67,19 @@ CREATE TABLE `item` (
 --
 
 INSERT INTO `item` (`itemName`, `itemCode`, `quantity`, `category`, `itemPrice`, `retailerId`, `image`) VALUES
+('Burger and Chips', 1, 100, 'Foods', '15000', 1, 'imgs/burger.jpg'),
+('Plain Burger', 2, 100, 'Foods', '10000', 1, 'imgs/big_hamburger_isolated_on_white.jpg'),
+('Chicken Chips', 3, 150, 'Foods', '12000', 1, 'imgs/chickenchips.jpg'),
+('Ginger', 4, 500, 'Cooking Remedies', '1000', 1, 'imgs/ginger.jpg'),
+('Coca Cola', 5, 200, 'Beverages', '1000', 1, 'imgs/sodacan.jpg'),
+('Lemonade', 6, 300, 'Beverages', '1200', 1, 'imgs/lemonade.png'),
+('GalaxyS10', 7, 58, 'Electronics', '350000', 1, 'imgs/galaxyS10.jpg'),
+('iPhone11Pro', 8, 50, 'Electronics', '1000000', 1, 'imgs/iPhone11Pro.png'),
+('Baby Jumpsuit', 9, 500, 'Babies Clothes', '5000', 1, 'imgs/girls.jpg'),
+('Trousers', 10, 60, 'Men Clothes', '33000', 1, 'imgs/trousers.jpg'),
 ('Evening Dress', 12, 30, 'Electronics', '80000', 1, NULL),
-('Evening Dress', 19, 30, 'Men Clothes', '80000', 1, 'imgs/ed.webp');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `item_order`
---
-
-CREATE TABLE `item_order` (
-  `item_order_id` int(11) NOT NULL,
-  `orderId` int(11) NOT NULL,
-  `itemCode` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+('Evening Dress', 19, 30, 'Women Clothes', '80000', 1, 'imgs/ed.webp'),
+('airpods', 56, 100, 'Electronics', '55000', 1, 'imgs/airpods.jpg');
 
 -- --------------------------------------------------------
 
@@ -69,8 +91,24 @@ CREATE TABLE `orders` (
   `orderId` int(11) NOT NULL,
   `date` date DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL,
-  `deliveryLocation` varchar(25) DEFAULT NULL
+  `deliveryLocation` varchar(25) DEFAULT NULL,
+  `customerId` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `itemCode` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`orderId`, `date`, `status`, `deliveryLocation`, `customerId`, `quantity`, `itemCode`) VALUES
+(5, '2020-08-12', 'DELIVERED', 'MLANDEGE', 12345685, 4, 1),
+(6, '2020-08-14', 'NEW', 'MLANDEGE', 12345685, 1, 7),
+(7, '2020-08-14', 'NEW', 'MLANDEGE', 12345685, 2, 56),
+(8, '2020-08-14', 'NEW', 'MLANDEGE', 12345685, 30, 5),
+(9, '2020-08-14', 'NEW', 'MLANDEGE', 12345685, 100, 9),
+(10, '2020-08-14', 'NEW', 'MLANDEGE', 12345685, 12, 4),
+(11, '2020-08-14', 'NEW', 'MLANDEGE', 12345685, 5, 10);
 
 -- --------------------------------------------------------
 
@@ -132,6 +170,12 @@ INSERT INTO `users` (`username`, `password`, `status`, `userId`, `retailerId`) V
 --
 
 --
+-- Indexes for table `customer`
+--
+ALTER TABLE `customer`
+  ADD PRIMARY KEY (`customerId`);
+
+--
 -- Indexes for table `item`
 --
 ALTER TABLE `item`
@@ -139,18 +183,12 @@ ALTER TABLE `item`
   ADD KEY `retailerId` (`retailerId`);
 
 --
--- Indexes for table `item_order`
---
-ALTER TABLE `item_order`
-  ADD PRIMARY KEY (`item_order_id`),
-  ADD KEY `orderId` (`orderId`),
-  ADD KEY `itemCode` (`itemCode`);
-
---
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
-  ADD PRIMARY KEY (`orderId`);
+  ADD PRIMARY KEY (`orderId`),
+  ADD KEY `customerId` (`customerId`),
+  ADD KEY `itemCode` (`itemCode`);
 
 --
 -- Indexes for table `retailer`
@@ -170,15 +208,15 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `item_order`
+-- AUTO_INCREMENT for table `customer`
 --
-ALTER TABLE `item_order`
-  MODIFY `item_order_id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `customer`
+  MODIFY `customerId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12345687;
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `retailer`
 --
@@ -200,11 +238,11 @@ ALTER TABLE `item`
   ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`retailerId`) REFERENCES `retailer` (`retailerId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `item_order`
+-- Constraints for table `orders`
 --
-ALTER TABLE `item_order`
-  ADD CONSTRAINT `item_order_ibfk_1` FOREIGN KEY (`orderId`) REFERENCES `orders` (`orderId`),
-  ADD CONSTRAINT `item_order_ibfk_2` FOREIGN KEY (`itemCode`) REFERENCES `item` (`itemCode`);
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customerId`) REFERENCES `customer` (`customerId`),
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`itemCode`) REFERENCES `item` (`itemCode`);
 
 --
 -- Constraints for table `users`
