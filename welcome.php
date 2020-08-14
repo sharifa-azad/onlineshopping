@@ -1,8 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL); 
 session_start();
+include 'connection.php';
 if(isset($_SESSION['retailerID']))
 {
 ?>
@@ -16,16 +14,6 @@ if(isset($_SESSION['retailerID']))
   <script src="js/jquery.3.5.1.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <link href=css/css.css rel="stylesheet" type="text/css">
-
-  <!--<link rel="stylesheet" type="text/css" href="path/to/resources/UberGallery.css" />
-<link rel="stylesheet" type="text/css" href="path/to/resources/colorbox/1/colorbox.css" />
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script type="text/javascript" src="path/to/resources/colorbox/jquery.colorbox.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-    $("a[rel='colorbox']").colorbox({maxWidth: "90%", maxHeight: "90%", opacity: ".5"});
-});
-</script>-->
 </head>
 <body>
 
@@ -35,40 +23,50 @@ $(document).ready(function(){
       <a class="navbar-brand" href="#">Online Shopping</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-      <!--<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Items<span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">Men's Clothes</a></li>
-          <li><a href="#">Women's Clothes</a></li>
-          <li><a href="#">Babies' Clothes</a></li>
-          <li><a href="#">Electronics</a></li>
-          <li><a href="#">Foods</a></li>
-          <li><a href="#">Beverages</a></li>
-          <li><a href="#">Cooking Remedies</a></li>
-        </ul>
-      </li>-->
-      <li class="addItem"><a href="#" id="items">Added Items</a></li>
+      <li class="active"><a href="#" id="home">Home</a></li>
+      <li class="addItem"><a href="#" id="items">Items</a></li>
 
-      <li class="profile"><a href="#">Profile</a></li>
+      <!--<li class="profile"><a href="#" id="profile">Profile</a></li>-->
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li class="navbtn1"><a href="#"><span class=" glyphicon glyphicon-user" ></span>Log Out</a></li>
+      <li class="navbtn1"><a href="logout.php"><span class=" glyphicon glyphicon-user" ></span>Log Out</a></li>
     </ul>
   </div>
 </nav>
   
-<div class="container">
+<div class="container-fluid" id="content">
+  <?php
+  include("home.php");
+
+  ?>
+</div>
+
+
   <script>
     $(document).ready(function(){
       $('#items').click(function(){
-        $(".container").load("addItems.php");
+        $("#content").load("addItems.php");
       });
+      $('#home').click(function(){
+        $("#content").load("home.php");
+      });
+      //$('#profile').click(function(){
+        //$("#content").load("retailerProfile.php");
+      //});
     });
   </script>
 </div>
 <nav class="navbar navbar navbar-fixed-bottom">
   <div class="container-fluid">
     <div class="navbar-header">
+      <div class="row">
+       <div class="col-sm-10">
+        <p style="color: #D2AC47">Website Implemented By Sharifa Azad Sharif</p>
+      </div>
+      <div class="col-sm-2">
+        <a href="https://api.whatsapp.com/send?phone=0789028454" id="contact" class="btn btn-success">WhatsApp Me</a>
+      </div>
+    </div>
       
     </div>
     
