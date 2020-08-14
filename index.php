@@ -1,7 +1,5 @@
  <?php
-  ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+ 
 include("connection.php");
 if (isset($_GET['cat'])) {
   $sql=$conn->prepare("SELECT item.itemName,item.itemCode,item.category,item.itemPrice,item.image,retailer.retailerName,retailer.phoneNumber FROM item,retailer WHERE (item.retailerId=retailer.retailerId and item.category=:cat)");
@@ -35,7 +33,7 @@ if (isset($_GET['cat'])) {
       <a class="navbar-brand" href="#">Online Shopping</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
+      <!--<li class="active"><a href="#">Home</a></li>-->
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Categories <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="index.php">All</a></li>
@@ -52,7 +50,6 @@ if (isset($_GET['cat'])) {
     <ul class="nav navbar-nav navbar-right">
       <li><button data-toggle="modal" data-target="#signup" class="glyphicon glyphicon-user nav-btn"></button>Sign Up</li>
       <li><button data-toggle="modal" data-target="#login" class="glyphicon glyphicon-log-in nav-btn">Login</button></li>
-        <!--<a class="login" href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>-->
     </ul>
   </div>
 </nav>
@@ -96,9 +93,16 @@ if (isset($_GET['cat'])) {
 <nav class="navbar navbar navbar-fixed-bottom">
   <div class="container-fluid">
     <div class="navbar-header">
-      
+      <div class="row">
+      <div class="col-sm-10">
+        <p style="color: #D2AC47">Website Implemented By Sharifa Azad Sharif</p>
+      </div>
+      <div class="col-sm-2">
+        <a href="https://api.whatsapp.com/send?phone=0789028454" id="contact" class="btn btn-success">WhatsApp Me</a>
+      </div>
     </div>
   </div>
+</div>
 </nav>
 
 
@@ -108,55 +112,61 @@ if (isset($_GET['cat'])) {
       
         <!-- Modal Header -->
         <div class="modal-header">
-          <!--<h4 class="modal-title">Modal Heading</h4>-->
-             <!--<img src="imgs/GOLDS3.png" class="logo" style="opacity: 8.9; padding-top: 1px; padding-bottom: 2px; margin-bottom: 5px; width:168PX; height: 130PX" >-->
              <h4 class="modal-title" style="color: #D2AC47;margin-top: 15px;">Create a new account</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         
         <!-- Modal body -->
         <div class="modal-body">
-          <form action="signupHandler.php" method="POST">
+          <form action="signupHandler.php" method="POST" onsubmit="validate()">
             <div class="row">
-              <div class="col-sm-12">
+              <div class="col-sm-6">
                 <label>Name</label>
-                <input type="text" name="name" class="form-control" required>
+                <input type="text" name="name" id="name"class="form-control" required>
 
                 <label>Username</label>
-                <input type="text" name="username" class="form-control" required>
+                <input type="text" name="username" id="username" class="form-control" required>
 
                  <label>Password</label>
-                <input type="text" name="password" class="form-control" required>
+                <input type="password" name="password" id="password"class="form-control" required>
 
                  <label>Email</label>
-                <input type="text" name="email" class="form-control" required>
+                <input type="email" name="email" id="email"class="form-control" required>
+              </div>
+              <div class="col-sm-6">
 
                  <label>Phone Number</label>
-                <input type="text" name="phone" class="form-control" required><br>
+                <input type="text" name="phone" id="phone"class="form-control" required>
 
                  <label >Gender</label>
-                 <select name="gender" class="form-control">
-                   <option value="Male">Male</option>
-                   <option value="Female">Female</option>
-                 </select><br>
-                <!--<input type="radio" value="male" class="form-control" checked required>Male
-                <input type="radio" value="female" class="form-control" required>Female-->
-
+                 <select name="gender" id="gender"class="form-control">
+                   <option id="male"value="Male">Male</option>
+                   <option id="female"value="Female">Female</option>
+                 </select>
                 <label>Place of Residence</label>
-                 <input type="text" class="form-control" required name="place">
+                 <input type="text" name="place" id="place" class="form-control" required name="place">
+
+                  <label>Role</label>
+                 <select name="role" id="role"class="form-control">
+                   <option value="retailer">Retailer</option>
+                   <option value="customer">Customer</option>
+                 </select>
+               </div>
 
               </div>
 
-            </div>
+            
+          </form>
 
-        </div>
-        
+
+        </div>        
         <!-- Modal footer -->
         <div class="modal-footer">
           <input type="submit" class="btn btn-primary" value="Sign Up" name="signup">
 
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
+      </div>
       </form>
         
       </div>
@@ -182,13 +192,14 @@ if (isset($_GET['cat'])) {
         <!-- Modal body -->
         <div class="modal-body">
           <form action="loginHandler.php" method="POST">
+
             <div class="row">
               <div class="col-sm-12">
                 <label>Username</label>
                 <input type="text" name="username" class="form-control" placeholder="Enter your username" required>
 
                  <label>Password</label>
-                <input type="text" name="password" class="form-control" placeholder="Enter your password" required>
+                <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
 
               </div>
 
@@ -199,6 +210,7 @@ if (isset($_GET['cat'])) {
         <!-- Modal footer -->
         <div class="modal-footer">
           <input type="submit" class="btn btn-primary" value="Login" name="login">
+          
 
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
