@@ -17,7 +17,23 @@ if(isset($_POST["login"])){
     }
     else
     {
+         $sql="select customerId from customer WHERE username='$username' and password='$password'";
+    $statement=$conn->prepare($sql);
+    $result=$statement->execute();
+    if($statement->rowCount()>0){
+        session_start();
+            $getCustomer=$statement->fetch();
+        $_SESSION['customerID']=$getCustomer['customerId'];
+        header("location:customerPage.php");
+    }else{
+      
         header("location:index.php");
+
+
+    }
+
+
+    
     }
 
     }
